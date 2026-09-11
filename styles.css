@@ -603,20 +603,7 @@ section {
 }
 
 /* ----- Стили для Карты ----- */
-.map {
-    margin-top: 40px;
-    width: 100%;
-    display: flex;
-    justify-content: center;
-}
 
-.map iframe {
-    width: 100%;
-    max-width: 1000px;
-    height: 400px;
-    border-radius: 15px;
-    display: block;
-}
 
 /* ----- АДАПТИВНОСТЬ Contacts.html ----- */
 @media (max-width: 768px) {
