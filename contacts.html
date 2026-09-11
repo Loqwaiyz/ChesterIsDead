@@ -63,8 +63,8 @@
                 <textarea placeholder="Ваше сообщение" required></textarea>
                 <button type="submit">Отправить</button>
                 <div class="form-success" id="formSuccess">
-                    <span class="checkmark" id="checkmark">✔</span>
-                    Сообщение успешно отправлено!
+                    <span class="checkmark" id="checkmark">×</span>
+                    Ошибка сервера!
                 </div>
             </form>
 
@@ -128,14 +128,6 @@ form.addEventListener("submit", function(e) {
             checkmark.classList.add("show");
         }, 200);
 
-        // очищаем форму
-        form.reset();
-
-        // убираем уведомление через 4 секунды
-        setTimeout(() => {
-            success.classList.remove("show");
-            checkmark.classList.remove("show");
-        }, 4000);
 
     }, 1200);
 });

@@ -586,10 +586,10 @@ section {
 .form-success {
     margin-top: 20px;
     padding: 15px;
-    background: #e0ffe4;
-    border-left: 5px solid #2ecc71;
+    background: #7c0505;
+    border-left: 5px solid #7a1010;
     border-radius: 8px;
-    color: #1f7a3a;
+    color: #c50f0f;
     font-size: 16px;
     font-weight: 500;
     opacity: 0;
