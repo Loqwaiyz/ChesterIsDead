@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Меню | Ресторан "Chester"</title>
+    <link rel="icon" href="favicon.png">
+    <link rel="stylesheet" href="styles.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <div class="logo">Chester</div>
+        <div class="burger" id="burger"><span></span><span></span><span></span></div>
+        <nav id="menu">
+            <ul>
+                <li><a href="index.html">Главная</a></li>
+                <li><a href="menu.html" class="active">Меню</a></li>
+                <li><a href="reservation.html">Бронирование</a></li>
+                <li><a href="about.html">О нас</a></li>
+                <li><a href="contacts.html">Контакты</a></li>
+                <li><a href="cart.html">Корзина (<span id="cart-counter">0</span>)</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="hero small-hero">
+        <h1>Наше Меню</h1>
+        <p>Лучшие блюда европейской и итальянской кухни</p>
+    </section>
+
+    <section class="filter-box">
+        <div class="filter-container">
+            <div class="filter-group">
+                <input type="number" id="price-min" placeholder="Цена от">
+                <input type="number" id="price-max" placeholder="Цена до">
+            </div>
+            <div class="filter-group">
+                <select id="sort-select">
+                    <option value="none">По умолчанию</option>
+                    <option value="asc">Сначала дешевые</option>
+                    <option value="desc">Сначала дорогие</option>
+                </select>
+            </div>
+            <button id="apply-filter" class="btn-filter">Применить</button>
+            <a href="likes.html" class="btn-favorites">Голосование</a>
+        </div>
+    </section>
+
+    <div id="filter-results-container" class="menu-grid" style="display:none; padding: 0 10%;"></div>
+
+    <div id="main-menu-container">
+        <section class="menu-section">
+            <h2>Закуски и Салаты</h2>
+            <div class="menu-grid">
+                <div class="menu-item">
+                    <img src="bruschetta.jpg" alt="Брускетта" class="menu-item-img">
+                    <div class="menu-content">
+                    <h3 class="menu-title">Брускетта с томатами</h3>
+                        <p class="menu-description">Хрустящий багет, свежие томаты, базилик и оливковое масло.</p>
+                        <div class="menu-footer">
+                        <span class="price">450 ₽</span>
+                        <button class="add-to-cart" data-name="Брускетта" data-price="450" data-image="bruschetta.jpg">В корзину</button>
+                        </div>
+                </div>
+                </div>
+                <div class="menu-item">
+                    <img src="salad.jpg" alt="Салат Цезарь" class="menu-item-img">
+                    <div class="menu-content">
+                    <h3 class="menu-title">Салат Цезарь</h3>
+                        <p class="menu-description">Классический рецепт с куриным филе.</p>
+                        <div class="menu-footer">
+                        <span class="price">420 ₽</span>
+                        <button class="add-to-cart" data-name="Салат Цезарь" data-price="420" data-image="salad.jpg">В корзину</button>
+                        </div>
+                 </div>
+            </div>
+            </div>
+        </section>
+
+        <section class="menu-section">
+    <h2>Горячее</h2>
+    <div class="menu-grid"> <div class="menu-item">
+            <img src="pizza.jpg" alt="Пицца" class="menu-item-img">
+            <div class="menu-content">
+                <h3 class="menu-title">Пицца Маргарита</h3>
+                <p class="menu-description">Моцарелла, томаты, орегано.</p>
+                <div class="menu-footer">
+                    <span class="price">590 ₽</span>
+                    <button class="add-to-cart" data-name="Пицца Маргарита" data-price="590" data-image="pizza.jpg">В корзину</button>
+                </div>
+            </div>
+        </div>
+        <div class="menu-item">
+            <img src="pasta.jpg" alt="Паста Карбонара" class="menu-item-img">
+            <div class="menu-content">
+                <h3 class="menu-title">Паста Карбонара</h3> <p class="menu-description">Бекон, сливки, пармезан, яйцо</p>
+                <div class="menu-footer">
+                    <span class="price">640 ₽</span>
+                    <button class="add-to-cart" data-name="Паста Карбонара" data-price="640" data-image="pasta.jpg">В корзину</button>
+                </div>
+            </div>
+        </div>
+    </div> </section>
+    </div>
+
+    <footer>
+        <p>&copy; 2025 Ресторан "Chester". Все права защищены.</p>
+    </footer>
+
+    <script>
+        // 1. Бургер меню
+        const burger = document.getElementById('burger');
+        const menu = document.getElementById('menu');
+        burger.addEventListener('click', () => {
+            burger.classList.toggle('active');
+            menu.classList.toggle('active');
+        });
+
+        // 2. Инициализация корзины
+        let cart = JSON.parse(localStorage.getItem("cart")) || [];
+        
+        function updateCounter() {
+            // Считаем общее количество товаров
+            const count = cart.reduce((sum, item) => sum + item.qty, 0);
+            document.getElementById("cart-counter").textContent = count;
+        }
+        updateCounter();
+
+        function saveCart() {
+            localStorage.setItem("cart", JSON.stringify(cart));
+            updateCounter();
+        }
+
+        function addToCart(item) {
+            let found = cart.find(x => x.name === item.name);
+            if (found) {
+                found.qty++;
+            } else {
+                cart.push({...item, qty: 1});
+            }
+            saveCart();
+        }
+
+        // 3. Анимация полета в корзину
+        function flyAnimation(imgElem) {
+            if (!imgElem) return;
+            
+            let imgClone = imgElem.cloneNode(true);
+            let rect = imgElem.getBoundingClientRect();
+            
+            imgClone.style.position = "fixed";
+            imgClone.style.left = rect.left + "px";
+            imgClone.style.top = rect.top + "px";
+            imgClone.style.width = imgElem.offsetWidth + "px";
+            imgClone.style.height = imgElem.offsetHeight + "px";
+            imgClone.style.zIndex = 9999;
+            imgClone.style.transition = "all 0.8s cubic-bezier(0.19, 1, 0.22, 1)";
+            imgClone.style.borderRadius = "50%";
+            
+            document.body.appendChild(imgClone);
+
+            // Координаты корзины
+            let cartLink = document.querySelector('a[href="cart.html"]');
+            let cartRect = cartLink.getBoundingClientRect();
+
+            setTimeout(() => {
+                imgClone.style.left = (cartRect.left + 20) + "px";
+                imgClone.style.top = (cartRect.top + 10) + "px";
+                imgClone.style.width = "20px";
+                imgClone.style.height = "20px";
+                imgClone.style.opacity = "0";
+            }, 10);
+
+            setTimeout(() => imgClone.remove(), 800);
+        }
+
+        // 4. Обработчики кнопок "В корзину" (делегирование событий для работы с фильтрами)
+        document.body.addEventListener('click', function(e) {
+            if (e.target.classList.contains('add-to-cart')) {
+                const btn = e.target;
+                const item = {
+                    name: btn.dataset.name,
+                    price: Number(btn.dataset.price),
+                    image: btn.dataset.image
+                };
+                
+                addToCart(item);
+                
+                // Находим картинку внутри карточки товара
+                const card = btn.closest('.menu-item');
+                const img = card.querySelector('img');
+                flyAnimation(img);
+            }
+        });
+
+        // 5. Логика фильтрации
+        const allItems = Array.from(document.querySelectorAll('.menu-item')).map(el => {
+            return {
+                element: el,
+                price: Number(el.querySelector('.add-to-cart').dataset.price),
+                html: el.outerHTML
+            };
+        });
+
+        document.getElementById('apply-filter').addEventListener('click', () => {
+            const min = Number(document.getElementById('price-min').value) || 0;
+            const max = Number(document.getElementById('price-max').value) || Infinity;
+            const sort = document.getElementById('sort-select').value;
+            
+            const mainMenu = document.getElementById('main-menu-container');
+            const results = document.getElementById('filter-results-container');
+            
+            // Фильтруем
+            let filtered = allItems.filter(item => item.price >= min && item.price <= max);
+            
+            // Сортируем
+            if (sort === 'asc') filtered.sort((a, b) => a.price - b.price);
+            if (sort === 'desc') filtered.sort((a, b) => b.price - a.price);
+
+            // Отображаем
+            mainMenu.style.display = 'none';
+            results.style.display = 'flex';
+            results.style.flexWrap = 'wrap';
+            results.style.gap = '20px';
+            results.style.justifyContent = 'center';
+            
+            results.innerHTML = "";
+            
+            if (filtered.length === 0) {
+                results.innerHTML = "<p>Блюда не найдены</p>";
+            } else {
+                filtered.forEach(item => {
+                    results.innerHTML += item.html;
+                });
+            }
+        });
+    </script>
+</body>
+</html>

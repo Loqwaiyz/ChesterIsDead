@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Бронирование столика | Ресторан "Chester"</title>
+    <link rel="icon" href="favicon.png">
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <header>
+        <div class="logo">Chester</div>
+        <div class="burger" id="burger"><span></span><span></span><span></span></div>
+        <nav id="menu">
+            <ul>
+                <li><a href="index.html">Главная</a></li>
+                <li><a href="menu.html">Меню</a></li>
+                <li><a href="reservation.html" class="active">Бронирование</a></li> <li><a href="about.html">О нас</a></li>
+                <li><a href="contacts.html">Контакты</a></li>
+                <li><a href="cart.html">Корзина</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="hero small-hero">
+        <h1>Забронировать столик</h1>
+        <p>Проведите незабываемый вечер в атмосфере уюта</p>
+    </section>
+
+    <section class="reservation-section">
+        <div class="reservation-container">
+            
+            <div class="reservation-text">
+                <h2>Ваши данные</h2>
+                <p>Заполните форму, и наш менеджер свяжется с вами для подтверждения брони в течение 15 минут.</p>
+            </div>
+
+            <form id="bookingForm" class="booking-form">
+                
+                <div class="form-row">
+                    <div class="input-group">
+                        <label>Ваше имя</label>
+                        <input type="text" id="name" placeholder="Иван Иванов" required>
+                    </div>
+                    <div class="input-group">
+                        <label>Телефон</label>
+                        <input type="tel" id="phone" placeholder="+7 (999) 000-00-00" required>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="input-group">
+                        <label>Дата</label>
+                        <input type="date" id="date" required>
+                    </div>
+                    <div class="input-group">
+                        <label>Время</label>
+                        <select id="time" required>
+                            <option value="">Выберите время</option>
+                            <option value="12:00">12:00</option>
+                            <option value="13:00">13:00</option>
+                            <option value="14:00">14:00</option>
+                            <option value="15:00">15:00</option>
+                            <option value="16:00">16:00</option>
+                            <option value="17:00">17:00</option>
+                            <option value="18:00">18:00</option>
+                            <option value="19:00">19:00</option>
+                            <option value="20:00">20:00</option>
+                            <option value="21:00">21:00</option>
+                            <option value="22:00">22:00</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label>Количество гостей</label>
+                    <div class="guests-selector">
+                        <button type="button" onclick="changeGuests(-1)">-</button>
+                        <input type="number" id="guests" value="2" min="1" max="20" readonly>
+                        <button type="button" onclick="changeGuests(1)">+</button>
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label>Пожелания (необязательно)</label>
+                    <textarea id="comments" rows="3" placeholder="Например: столик у окна, детский стул..."></textarea>
+                </div>
+
+                <button type="submit" class="submit-btn">Подтвердить бронь</button>
+
+                <div id="successMessage" class="success-message">
+                    <h3>Спасибо! <span id="userNameDisplay"></span></h3>
+                    <p>Ваш столик забронирован. Мы ждем вас!</p>
+                </div>
+            </form>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy;2025 Ресторан "Chester". Все права защищены..</p>
+    </footer>
+
+    <script>
+        // Бургер меню
+        const burger = document.getElementById('burger');
+        const menu = document.getElementById('menu');
+        burger.addEventListener('click', () => {
+            burger.classList.toggle('active');
+            menu.classList.toggle('active');
+        });
+
+        // Управление количеством гостей
+        const guestsInput = document.getElementById('guests');
+        function changeGuests(delta) {
+            let val = parseInt(guestsInput.value);
+            val += delta;
+            if (val < 1) val = 1;
+            if (val > 20) val = 20; // Ограничение
+            guestsInput.value = val;
+        }
+
+        // Обработка формы
+        const form = document.getElementById('bookingForm');
+        const successMsg = document.getElementById('successMessage');
+        const btn = form.querySelector('.submit-btn');
+
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            // Имитация отправки
+            btn.textContent = "Отправка...";
+            btn.disabled = true;
+
+            setTimeout(() => {
+                document.getElementById('userNameDisplay').textContent = document.getElementById('name').value;
+                form.reset();
+                guestsInput.value = 2; // сброс гостей
+                
+                successMsg.classList.add('show');
+                btn.style.display = 'none'; // скрываем кнопку
+                
+                // Скрываем все инпуты для красоты
+                document.querySelectorAll('.input-group').forEach(el => el.style.opacity = '0.3');
+
+            }, 1500);
+        });
+        
+        // Установим минимальную дату сегодня
+        document.getElementById('date').min = new Date().toISOString().split("T")[0];
+    </script>
+</body>
+</html>

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Оформление заказа | Chester</title>
+    <link rel="icon" href="favicon.png">
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+<header>
+    <div class="logo">Chester</div>
+    <div class="burger" id="burger"><span></span><span></span><span></span></div>
+
+    <nav id="menu">
+        <ul>
+            <li><a href="index.html">Главная</a></li>
+            <li><a href="menu.html">Меню</a></li>
+            <li><a href="reservation.html">Бронирование</a></li>
+            <li><a href="about.html">О нас</a></li>
+            <li><a href="contacts.html">Контакты</a></li>
+            <li><a href="cart.html" class="active">Корзина</a></li>
+        </ul>
+    </nav>
+</header>
+    <section class="hero small-hero">
+        <h1>Оформление заказа</h1>
+        <p>Заполните данные для доставки</p>
+    </section>
+<div class="checkout-container">
+    <h2>Оформление заказа</h2>
+
+    <label>Имя</label>
+    <input type="text" placeholder="Введите имя" required>
+
+    <label>Телефон</label>
+    <input type="tel" placeholder="+7 ___ ___ __ __" required>
+
+    <label>Адрес доставки</label>
+    <input type="text" placeholder="Улица, дом, квартира" required>
+
+    <label>Способ оплаты</label>
+    <select>
+        <option>Картой онлайн</option>
+        <option>Картой при получении</option>
+        <option>Наличными</option>
+    </select>
+
+    <a href="#" class="checkout-btn">Подтвердить заказ</a>
+</div>
+
+<footer>
+    <p>&copy; 2025 Ресторан "Chester". Все права защищены.</p>
+</footer>
+
+<script>
+/* Бургер меню */
+const burger = document.getElementById("burger");
+const menu = document.getElementById("menu");
+
+burger.onclick = () => {
+    burger.classList.toggle("active");
+    menu.classList.toggle("active");
+};
+</script>
+
+</body>
+</html>

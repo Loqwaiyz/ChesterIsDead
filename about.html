@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>О нас | Ресторан "Chester"</title>
+    <link rel="icon" href="favicon.png">
+    <link rel="stylesheet" href="styles.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <div class="logo">Chester</div>
+        <div class="burger" id="burger"><span></span><span></span><span></span></div>
+        <nav id="menu">
+            <ul>
+                <li><a href="index.html">Главная</a></li>
+                <li><a href="menu.html">Меню</a></li>
+                <li><a href="reservation.html">Бронирование</a></li>
+                <li><a href="about.html" class="active">О нас</a></li>
+                <li><a href="contacts.html">Контакты</a></li>
+                <li><a href="cart.html">Корзина</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="hero small-hero">
+        <h1>История "Chester"</h1>
+        <p>Аутентично. Вкусно. Незабываемо.</p>
+    </section>
+
+    <section class="about-section">
+        <div class="about-content">
+            <div class="gallery-trigger" onclick="openModal(); currentSlide(1)">
+                <img src="interior.png" alt="Интерьер ресторана" class="about-image trigger-img">
+                <div class="trigger-overlay">
+                    <span>📷 Открыть галерею</span>
+                </div>
+            </div>
+            <div class="about-text">
+                <h2>Как мы начинали</h2>
+                <p>
+                    Ресторан <strong>"Chester"</strong> зародился из мечты создать место, где время замедляется. 
+                    Мы начинали как семейное кафе, а сегодня это место притяжения для гурманов города.
+                </p>
+                <h2>Наша философия</h2>
+                <p>
+                    Мы не экономим на ингредиентах. Если сыр — то пармезан 24-месячной выдержки. 
+                    Если мясо — то от лучших фермерских хозяйств.
+                    Наша цель — чтобы каждый уходил с полным желудком и хорошим настроением.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <section class="team">
+        <h2>Команда профессионалов</h2>
+        <div class="team-grid">
+            <div class="team-member">
+                <img src="oguzok.jpg" alt="Шеф">
+                <h3>Александр Честер</h3>
+                <p>Бренд-шеф</p>
+            </div>
+            <div class="team-member">
+                <img src="manager.jpg" alt="Менеджер">
+                <h3>Марина Лукьяненко</h3>
+                <p>Управляющая</p>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy;2025 Ресторан "Chester". Все права защищены.</p>
+    </footer>
+
+    <script>
+        const burger = document.getElementById('burger');
+        const menu = document.getElementById('menu');
+        burger.onclick = () => {
+            burger.classList.toggle('active');
+            menu.classList.toggle('active');
+        };
+    </script>
+
+    <div id="galleryModal" class="modal">
+    <span class="close cursor" onclick="closeModal()">&times;</span>
+    
+    <div class="modal-content">
+
+        <div class="mySlides fade">
+            <div class="numbertext">1 / 4</div>
+            <img src="interior.png" alt="Интерьер 1">
+        </div>
+
+        <div class="mySlides fade">
+            <div class="numbertext">2 / 4</div>
+            <img src="chef.png" alt="Интерьер 2"> 
+        </div>
+
+        <div class="mySlides fade">
+            <div class="numbertext">3 / 4</div>
+            <img src="supper.png" alt="Интерьер 3">
+        </div>
+        
+        <div class="mySlides fade">
+            <div class="numbertext">4 / 4</div>
+            <img src="outside.png" alt="Интерьер 4">
+        </div>
+
+        <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+        <a class="next" onclick="plusSlides(1)">&#10095;</a>
+    </div>
+    </div>
+
+    <script>
+    // ===== СКРИПТ ГАЛЕРЕИ =====
+
+    // Открыть модальное окно
+    function openModal() {
+        document.getElementById("galleryModal").style.display = "block";
+        // Блокируем скролл основной страницы
+        document.body.style.overflow = "hidden"; 
+    }
+
+    // Закрыть модальное окно
+    function closeModal() {
+        document.getElementById("galleryModal").style.display = "none";
+        // Возвращаем скролл
+        document.body.style.overflow = "auto";
+    }
+
+    var slideIndex = 1;
+    showSlides(slideIndex);
+
+    // Переключение вперед/назад
+    function plusSlides(n) {
+        showSlides(slideIndex += n);
+    }
+
+    // Переключение на конкретный слайд
+    function currentSlide(n) {
+        showSlides(slideIndex = n);
+    }
+
+    function showSlides(n) {
+        var i;
+        var slides = document.getElementsByClassName("mySlides");
+        
+        // Если ушли дальше последнего -> к первому
+        if (n > slides.length) {slideIndex = 1}
+        // Если ушли раньше первого -> к последнему
+        if (n < 1) {slideIndex = slides.length}
+        
+        // Скрываем все слайды
+        for (i = 0; i < slides.length; i++) {
+            slides[i].style.display = "none";
+        }
+        
+        // Показываем текущий, добавляем flex для центровки
+        slides[slideIndex-1].style.display = "flex"; 
+    }
+
+    // Закрытие по клику вне картинки (по черному фону)
+    window.onclick = function(event) {
+        const modal = document.getElementById("galleryModal");
+        if (event.target == modal) {
+            closeModal();
+        }
+    }
+
+    // Управление с клавиатуры (Escape и стрелки)
+    document.addEventListener('keydown', function(event) {
+        const modal = document.getElementById("galleryModal");
+        if (modal.style.display === "block") {
+            if (event.key === "Escape") {
+                closeModal();
+            } else if (event.key === "ArrowRight") {
+                plusSlides(1);
+            } else if (event.key === "ArrowLeft") {
+                plusSlides(-1);
+            }
+        }
+    });
+</script>
+</body>
+</html>
